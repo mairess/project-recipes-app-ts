@@ -1,10 +1,12 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../context/AppContext';
 
 function Login() {
   const navigate = useNavigate();
-  const { loginData, setLoginData } = useContext(AppContext);
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
+  });
   const [isFormValid, setIsFormValid] = useState(false);
   const { email, password } = loginData;
 
