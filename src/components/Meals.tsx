@@ -5,8 +5,7 @@ export function Meals() {
     <div>
       <Header />
       <p>
-        comer comer é o melhor para poder cres
-        cer!
+        comer comer é o melhor para poder crescer!
       </p>
     </div>
   );
