@@ -18,7 +18,7 @@ export default function Header() {
     if (pathname === '/profile') return 'Profile';
     if (pathname === '/done-recipes') return 'Done Recipes';
     if (pathname === '/favorite-recipes') return 'Favorite Recipes';
-    return '';
+    // return '';
   };
   const handleClickProfile = () => {
     navigate('/profile');

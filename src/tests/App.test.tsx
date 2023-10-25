@@ -21,9 +21,10 @@ test("Deve redirecionar para a rota '/meals' após login válido", async () => {
 const profileBtnTestID = 'profile-top-btn';
 const pageTitleTestId = 'page-title';
 const searchTitleTestId = 'search-top-btn';
+const searchBarTestId = 'search-input';
 
-test('Verifica se os botões estão na tela', async () => {
-  renderWithRouter(<App />, { route: '/meals' });
+test('Verifica se os botões estão na tela e se a barra de pesquisa é mostrado quando o botão de pesquisa é clicado', async () => {
+  const { user } = renderWithRouter(<App />, { route: '/meals' });
 
   const searchBtn = screen.getByTestId(searchTitleTestId);
   const profileBtn = screen.getByTestId(profileBtnTestID);
@@ -32,6 +33,11 @@ test('Verifica se os botões estão na tela', async () => {
   expect(searchBtn).toBeInTheDocument();
   expect(profileBtn).toBeInTheDocument();
   expect(pageTitle).toBeInTheDocument();
+
+  await user.click(searchBtn);
+  const searchBar = screen.getByTestId(searchBarTestId);
+
+  expect(searchBar).toBeInTheDocument();
 });
 
 test('Verifica se o botão de profile leva pra rota certa', async () => {
