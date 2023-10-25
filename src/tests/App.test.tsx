@@ -126,7 +126,6 @@ test.only('Verifica se o fetch funciona corretamente', async () => {
 
 test.only('Verifica se o fetch funciona corretamente', async () => {
   const { user } = renderWithRouter(<App />, { route: '/drinks' });
-  // const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
   const mockData = {
     strDrink: 'Mango Orange Smoothie',
     strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/vdp2do1487603520.jpg',
@@ -136,7 +135,6 @@ test.only('Verifica se o fetch funciona corretamente', async () => {
     json: async () => mockData,
   } as Response;
   vi.spyOn(global, 'fetch').mockResolvedValue(MOCK_RESPONSE);
-  // const errorMessage = ("Sorry, we haven't found any recipes for these filters.");
   const botaoSearch = screen.getByTestId('exec-search-btn');
   const testaBotaoRadio = screen.getByTestId('ingredient-search-radio');
   const inputType = screen.getByTestId('search-input');
@@ -144,6 +142,4 @@ test.only('Verifica se o fetch funciona corretamente', async () => {
   await user.type(inputType, 'Roberto');
   await user.click(testaBotaoRadio);
   await user.click(botaoSearch);
-  // await waitFor(() => screen.getByText(errorMessage));
-  // // await waitFor(() => expect(alertMock).toHaveBeenCalledWith(alertElement));
 });
