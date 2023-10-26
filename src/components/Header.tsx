@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
-import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [searchInput, setSearchInput] = useState(false);
+  // const [searchInput, setSearchInput] = useState(false);
 
   const shouldShowSearchIcon = () => {
     return !['/profile', '/done-recipes', '/favorite-recipes'].includes(pathname);
@@ -20,19 +19,13 @@ export default function Header() {
     if (pathname === '/favorite-recipes') return 'Favorite Recipes';
     // return '';
   };
+
   const handleClickProfile = () => {
     navigate('/profile');
   };
 
   return (
     <div>
-      {searchInput && (
-        <input
-          type="text"
-          data-testid="search-input"
-          name="search"
-        />
-      )}
       <button
         type="button"
         onClick={ handleClickProfile }
@@ -44,15 +37,9 @@ export default function Header() {
         />
       </button>
       {shouldShowSearchIcon() && (
-        <button
-          onClick={ () => setSearchInput(!searchInput) }
-        >
-          <img
-            data-testid="search-top-btn"
-            src={ searchIcon }
-            alt="search icon"
-          />
-        </button>
+        <span>
+          <SearchBar />
+        </span>
       )}
       <h1 data-testid="page-title">
         { getHeaderTitle() }
