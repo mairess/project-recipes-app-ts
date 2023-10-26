@@ -23,8 +23,12 @@ test('Verifica se o botão de search leva pra rota certa', async () => {
 test('Verifica se o fetch de meals funciona corretamente', async () => {
   const { user } = renderWithRouter(<App />, { route: '/meals' });
   const alert = vi.spyOn(window, 'alert');
+  function customAlert(message: string) {
+    console.log(message);
+  }
 
   vi.spyOn(global, 'fetch');
+  alert.mockImplementation(customAlert);
 
   const iconSearchBtn = screen.getByTestId(searchTitleTestId);
 
@@ -94,8 +98,12 @@ test('Verifica se o fetch drinks funciona corretamente', async () => {
 test('Verifica se o alert é chamado', async () => {
   const { user } = renderWithRouter(<App />, { route: '/meals' });
   const alert = vi.spyOn(window, 'alert');
+  function customAlert(message: string) {
+    console.log(message);
+  }
 
   vi.spyOn(global, 'fetch');
+  alert.mockImplementation(customAlert);
 
   const iconSearchBtn = screen.getByTestId(searchTitleTestId);
 
