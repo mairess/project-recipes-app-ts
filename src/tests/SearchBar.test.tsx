@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import App from '../App';
 import renderWithRouter from './helpers/renderWith';
+import { mangoDrink, turkeyMeal } from './helpers/mocks';
 
 /* TESTES PARA O SEARCH BAR */
 
@@ -180,4 +181,66 @@ test('Verifica se a url do drink possui id do item pesquisado', async () => {
   await user.click(botaoSearch);
 
   waitFor(() => expect(window.location.pathname).toBe('/drinks/12716'));
+});
+
+test('Testa busca que retorna um resultado com drinks', async () => {
+  vi.spyOn(global, 'fetch').mockResolvedValue({
+    json: async () => mangoDrink,
+  } as Response);
+
+  const { user } = renderWithRouter(<App />, { route: '/drinks' });
+
+  const iconSearchBtn = screen.getByTestId(searchTitleTestId);
+
+  await user.click(iconSearchBtn);
+
+  const botaoSearch = screen.getByTestId(searchBtnTestId);
+  const radioBtnName = screen.getByTestId(radioBtnTestId);
+  const inputType = screen.getByTestId(searchInputTestId);
+
+  await user.type(inputType, 'Mango Orange Smoothie');
+  await user.click(radioBtnName);
+  await user.click(botaoSearch);
+
+  waitFor(() => expect(window.location.pathname).toBe('/drinks/12716'));
+});
+
+test('Testa busca que retorna um resultado com meals', async () => {
+  vi.spyOn(global, 'fetch').mockResolvedValue({
+    json: async () => turkeyMeal,
+  } as Response);
+
+  const { user } = renderWithRouter(<App />, { route: '/meals' });
+
+  const iconSearchBtn = screen.getByTestId(searchTitleTestId);
+
+  await user.click(iconSearchBtn);
+
+  const botaoSearch = screen.getByTestId(searchBtnTestId);
+  const radioBtnName = screen.getByTestId(radioBtnTestId);
+  const inputType = screen.getByTestId(searchInputTestId);
+
+  await user.type(inputType, 'Turkey Meatloaf');
+  await user.click(radioBtnName);
+  await user.click(botaoSearch);
+
+  waitFor(() => expect(window.location.pathname).toBe('/meals/52845'));
+});
+
+test('Testa a busca de meals com input vazio', async () => {
+  const { user } = renderWithRouter(<App />, { route: '/meals' });
+
+  const iconSearchBtn = screen.getByTestId(searchTitleTestId);
+
+  await user.click(iconSearchBtn);
+
+  const botaoSearch = screen.getByTestId(searchBtnTestId);
+  const radioBtnName = screen.getByTestId(radioBtnTestId);
+
+  await user.click(radioBtnName);
+  await user.click(botaoSearch);
+
+  const description = screen.getByText('comer comer é o melhor para poder crescer!');
+
+  expect(description).toBeInTheDocument();
 });
