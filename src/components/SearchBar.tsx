@@ -41,9 +41,9 @@ function SearchBar() {
       } else {
         console.log(data.meals);
       }
-      if (data.meals && data.meals.length > 1) {
+      if (data.meals && data.meals.length >= 1) {
         setFoundRecipes(data.meals.slice(0, 12));
-      } else if (data.drinks && data.drinks.length > 1) {
+      } else if (data.drinks && data.drinks.length >= 1) {
         setFoundRecipes(data.drinks.slice(0, 12));
       } else {
         setFoundRecipes([]);

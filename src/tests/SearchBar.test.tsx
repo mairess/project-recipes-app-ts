@@ -9,6 +9,7 @@ const searchTitleTestId = 'search-top-btn';
 const searchBtnTestId = 'exec-search-btn';
 const ingredientBtnTestId = 'ingredient-search-radio';
 const searchInputTestId = 'search-input';
+const radioBtnTestId = 'name-search-radio';
 
 test('Verifica se o botão de search leva pra rota certa', async () => {
   const { user } = renderWithRouter(<App />, { route: '/meals' });
@@ -43,7 +44,7 @@ test('Verifica se o fetch de meals funciona corretamente', async () => {
   user.clear(inputType);
 
   await user.type(inputType, 'brown');
-  const radioBtnName = screen.getByTestId('name-search-radio');
+  const radioBtnName = screen.getByTestId(radioBtnTestId);
   await user.click(radioBtnName);
   await user.click(botaoSearch);
 
@@ -108,4 +109,75 @@ test('Verifica se o alert é chamado', async () => {
   await user.click(botaoSearch);
 
   waitFor(() => expect(alert).toBeCalledWith("Sorry, we haven't found any recipes for these filters."));
+});
+
+test('Verifica se ao fazer a pesquisa sem dados corretos retorna um array vazio', async () => {
+  const { user } = renderWithRouter(<App />, { route: '/meals' });
+
+  vi.spyOn(global, 'fetch');
+
+  const iconSearchBtn = screen.getByTestId(searchTitleTestId);
+
+  await user.click(iconSearchBtn);
+
+  const botaoSearch = screen.getByTestId(searchBtnTestId);
+  const testaBotaoRadio = screen.getByTestId(ingredientBtnTestId);
+  const inputType = screen.getByTestId(searchInputTestId);
+
+  await user.type(inputType, 'tomato');
+  await user.click(testaBotaoRadio);
+  await user.click(botaoSearch);
+
+  expect(fetch).toHaveBeenCalled();
+  const mealName = await waitFor(() => screen.getByText(/brown stew chicken/i));
+
+  expect(mealName).toBeInTheDocument();
+
+  user.clear(inputType);
+
+  await user.type(inputType, 'a');
+  await user.click(testaBotaoRadio);
+  await user.click(botaoSearch);
+
+  await waitFor(() => expect(mealName).not.toBeInTheDocument());
+});
+
+test('Verifica se a url da meal possui id do item pesquisado', async () => {
+  const { user } = renderWithRouter(<App />, { route: '/meals' });
+
+  vi.spyOn(global, 'fetch');
+
+  const iconSearchBtn = screen.getByTestId(searchTitleTestId);
+
+  await user.click(iconSearchBtn);
+
+  const botaoSearch = screen.getByTestId(searchBtnTestId);
+  const radioBtnName = screen.getByTestId(radioBtnTestId);
+  const inputType = screen.getByTestId(searchInputTestId);
+
+  await user.type(inputType, 'Christmas Pudding Flapjack');
+  await user.click(radioBtnName);
+  await user.click(botaoSearch);
+
+  waitFor(() => expect(window.location.pathname).toBe('/meals/52788'));
+});
+
+test('Verifica se a url do drink possui id do item pesquisado', async () => {
+  const { user } = renderWithRouter(<App />, { route: '/drinks' });
+
+  vi.spyOn(global, 'fetch');
+
+  const iconSearchBtn = screen.getByTestId(searchTitleTestId);
+
+  await user.click(iconSearchBtn);
+
+  const botaoSearch = screen.getByTestId(searchBtnTestId);
+  const radioBtnName = screen.getByTestId(radioBtnTestId);
+  const inputType = screen.getByTestId(searchInputTestId);
+
+  await user.type(inputType, 'Mango Orange Smoothie');
+  await user.click(radioBtnName);
+  await user.click(botaoSearch);
+
+  waitFor(() => expect(window.location.pathname).toBe('/drinks/12716'));
 });
