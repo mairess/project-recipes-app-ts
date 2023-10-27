@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MealType } from '../types';
 import searchIcon from '../images/searchIcon.svg';
 
 function SearchBar() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('');
   const [foundRecipes, setFoundRecipes] = useState<MealType[]>([]);
@@ -10,6 +12,7 @@ function SearchBar() {
   const FIRST_LETTER = 'first-letter';
   const INGREDIENT = 'ingredient';
   const NAME = 'name';
+  const ALERT_MESSAGE = "Sorry, we haven't found any recipes for these filters.";
 
   const handleRadioButton = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -32,14 +35,13 @@ function SearchBar() {
       const data = await response.json();
       if (data.meals && data.meals.length === 1) {
         const recipeId = data.meals[0].idMeal;
-        const url = `/meals/${recipeId}`;
-        window.location.assign(url);
+        navigate(`/meals/${recipeId}`);
       } else if (data.drinks && data.drinks.length === 1) {
         const recipeId = data.drinks[0].idDrink;
-        const url = `/drinks/${recipeId}`;
-        window.location.assign(url);
+        navigate(`/drinks/${recipeId}`);
       } else {
         console.log(data.meals);
+        console.log(data.drinks);
       }
       if (data.meals && data.meals.length >= 1) {
         setFoundRecipes(data.meals.slice(0, 12));
@@ -47,10 +49,11 @@ function SearchBar() {
         setFoundRecipes(data.drinks.slice(0, 12));
       } else {
         setFoundRecipes([]);
-        showAlert("Sorry, we haven't found any recipes for these filters.");
+        showAlert(ALERT_MESSAGE);
       }
     } catch (error) {
       console.log(error);
+      showAlert(ALERT_MESSAGE);
     }
   };
 
@@ -60,6 +63,7 @@ function SearchBar() {
       return;
     }
     if (!isValidSearch()) {
+      showAlert(ALERT_MESSAGE);
       return;
     }
     const apiUrl = getApiUrl();
