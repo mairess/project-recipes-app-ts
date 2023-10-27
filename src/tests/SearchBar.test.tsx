@@ -11,7 +11,7 @@ const ingredientBtnTestId = 'ingredient-search-radio';
 const searchInputTestId = 'search-input';
 const radioBtnTestId = 'name-search-radio';
 
-test('Verifica se o botão de search leva pra rota correta', async () => {
+test('Verifica se o botão de search leva pra rota certa', async () => {
   const { user } = renderWithRouter(<App />, { route: '/meals' });
   const searchBtn = screen.getByTestId(searchTitleTestId);
 
