@@ -73,3 +73,79 @@ export type InputType = {
   NAME: string;
   INGREDIENT: string;
 };
+
+export type MealTypes = {
+  strMeal: string;
+  strMealThumb: string;
+  strDrink: string;
+  strDrinkThumb: string;
+};
+
+export type Meal = {
+  idMeal: string;
+  strMeal: string;
+  strDrinkAlternate: string | null;
+  strCategory: string;
+  strArea: string;
+  strInstructions: string;
+  strMealThumb: string;
+  strTags: string | null;
+  strYoutube: string;
+  strIngredient1: string;
+  strIngredient2: string;
+  strIngredient3: string;
+  strIngredient4: string;
+  strIngredient5: string;
+  strIngredient6: string;
+  strIngredient7: string;
+
+  strSource: string | null;
+  strImageSource: string | null;
+  strCreativeCommonsConfirmed: string | null;
+  dateModified: string | null;
+};
+
+export type MealsList = {
+  meals: Meal[];
+};
+
+export type Drink = {
+  idDrink: string;
+  strDrink: string;
+  strDrinkAlternate: string | null;
+  strTags: string | null;
+  strVideo: string | null;
+  strCategory: string;
+  strIBA: string | null;
+  strAlcoholic: string;
+  strGlass: string;
+  strInstructions: string;
+  strInstructionsES: string | null;
+  strInstructionsDE: string | null;
+  strInstructionsFR: string | null;
+  strInstructionsIT: string | null;
+  strInstructionsZH_HANS: string | null;
+  strInstructionsZH_HANT: string | null;
+  strDrinkThumb: string;
+  strIngredient1: string;
+
+  strImageSource: string | null;
+  strImageAttribution: string | null;
+  strCreativeCommonsConfirmed: string;
+  dateModified: string;
+};
+
+export type DrinksList = {
+  drinks: Drink[];
+};
+export type DoneRecipe = {
+  id: string;
+  type: string;
+  nationality: string;
+  category: string;
+  alcoholicOrNot: string;
+  name: string;
+  image: string;
+  doneDate: string;
+  tags: string[];
+};

@@ -1,35 +1,25 @@
-import { useEffect, useState } from 'react';
-import { MealType } from '../types';
+import { useParams } from 'react-router-dom';
+import { DoneRecipe, MealType } from '../types';
+import Recomendations from './Recomendations';
+import useFetchRecommendations from '../hooks/useFetchRecommendation';
+import useFetchDetails from '../hooks/useFetchDetails';
+import { ConteinerButton, Button, Iframe, Img } from './RecipeDetailsStyle';
 
 function RecipeDetails() {
-  const [recipe, setRecipe] = useState<MealType | null>(null);
+  const route = window.location.pathname.includes('meals') ? '/meals' : '/drinks';
+  const { id } = useParams() as { id: string };
+  useFetchRecommendations(route);
+  const { recipe } = useFetchDetails(id, route);
 
-  useEffect(() => {
-    const fetchRecipe = async () => {
-      const recipeId = window.location.pathname.split('/')[2];
-      const mealUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
-      const drinkUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
-      let response;
-
-      if (window.location.pathname.startsWith('/meals')) {
-        response = await fetch(mealUrl);
-      } else if (window.location.pathname.startsWith('/drinks')) {
-        response = await fetch(drinkUrl);
-      }
-
-      if (response && response.ok) {
-        const data = await response.json();
-        setRecipe(data.meals ? data.meals[0] : data.drinks[0]);
-      }
-    };
-    fetchRecipe();
-  }, []);
+  const donaRecipesJSON = localStorage.getItem('doneRecipes');
+  const doneRecipes = donaRecipesJSON ? JSON.parse(donaRecipesJSON) : [];
+  const findRecipes = doneRecipes.find((recipes: DoneRecipe) => recipes.id === id);
 
   return (
     <div>
       {recipe ? (
         <div>
-          <img
+          <Img
             data-testid="recipe-photo"
             src={ recipe.strMealThumb || recipe.strDrinkThumb }
             alt="Recipe"
@@ -60,7 +50,7 @@ function RecipeDetails() {
           <h2>Instructions</h2>
           <p data-testid="instructions">{recipe.strInstructions}</p>
           {window.location.pathname.startsWith('/meals') && recipe.strYoutube && (
-            <iframe
+            <Iframe
               data-testid="video"
               width="560"
               height="315"
@@ -73,6 +63,20 @@ function RecipeDetails() {
       ) : (
         <div>Loading...</div>
       )}
+      <Recomendations
+        route={ route }
+      />
+      <ConteinerButton>
+
+        {!findRecipes && (
+          <Button
+            data-testid="start-recipe-btn"
+          >
+            Start Recipe
+          </Button>
+        )}
+
+      </ConteinerButton>
     </div>
   );
 }

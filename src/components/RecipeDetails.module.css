@@ -1,0 +1,7 @@
+.botaoFixo {
+  bottom: 0;
+  cursor: pointer;
+  padding: 10px 20px;
+  position: fixed;
+  right: 0;
+}
