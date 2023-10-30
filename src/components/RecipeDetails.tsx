@@ -1,30 +1,16 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { DoneRecipe, MealType } from '../types';
+import { useParams } from 'react-router-dom';
+import { MealType } from '../types';
 import Recomendations from './Recomendations';
 import useFetchRecommendations from '../hooks/useFetchRecommendation';
 import useFetchDetails from '../hooks/useFetchDetails';
-import { ConteinerButton, Button, Iframe, Img } from './RecipeDetailsStyle';
+import { Iframe, Img } from './RecipeDetailsStyle';
+import ButtonRecipe from './ButtonRecipe';
 
 function RecipeDetails() {
-  const navigate = useNavigate();
   const route = window.location.pathname.includes('meals') ? '/meals' : '/drinks';
   const { id } = useParams() as { id: string };
   useFetchRecommendations(route);
   const { recipe } = useFetchDetails(id, route);
-
-  const doneRecipesJSON = localStorage.getItem('doneRecipes');
-  const doneRecipes = doneRecipesJSON ? JSON.parse(doneRecipesJSON) : [];
-  const findRecipes = doneRecipes.find((recipes: DoneRecipe) => recipes.id === id);
-  const inProgressRecipesJSON = localStorage.getItem('inProgressRecipes');
-  const inProgressRecipes = inProgressRecipesJSON
-    ? JSON.parse(inProgressRecipesJSON)
-    : {};
-  const isRecipeInProgress = inProgressRecipes[route.slice(1)]
-    && inProgressRecipes[route.slice(1)][id];
-
-  const handleClick = () => {
-    navigate(`${route}/${id}/in-progress`);
-  };
 
   return (
     <div>
@@ -77,18 +63,10 @@ function RecipeDetails() {
       <Recomendations
         route={ route }
       />
-      <ConteinerButton>
-
-        {!findRecipes && (
-          <Button
-            data-testid="start-recipe-btn"
-            onClick={ handleClick }
-          >
-            {isRecipeInProgress ? 'Continue Recipe' : 'Start Recipe'}
-          </Button>
-        )}
-
-      </ConteinerButton>
+      <ButtonRecipe
+        id={ id }
+        route={ route }
+      />
     </div>
   );
 }
