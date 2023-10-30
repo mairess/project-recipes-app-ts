@@ -5,7 +5,6 @@ import SearchBar from './SearchBar';
 export default function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  // const [searchInput, setSearchInput] = useState(false);
 
   const shouldShowSearchIcon = () => {
     return !['/profile', '/done-recipes', '/favorite-recipes'].includes(pathname);
@@ -17,7 +16,6 @@ export default function Header() {
     if (pathname === '/profile') return 'Profile';
     if (pathname === '/done-recipes') return 'Done Recipes';
     if (pathname === '/favorite-recipes') return 'Favorite Recipes';
-    // return '';
   };
 
   const handleClickProfile = () => {

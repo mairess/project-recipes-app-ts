@@ -34,5 +34,5 @@ export const Img = styled.img`
 width: 21rem;
 height: 12rem;
 flex-shrink: 0;
-        
+
 `;

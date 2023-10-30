@@ -1,16 +1,44 @@
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { MealType } from '../types';
 import Recomendations from './Recomendations';
 import useFetchRecommendations from '../hooks/useFetchRecommendation';
 import useFetchDetails from '../hooks/useFetchDetails';
 import { Iframe, Img } from './RecipeDetailsStyle';
 import ButtonRecipe from './ButtonRecipe';
+import shareIcon from '../images/shareIcon.svg';
 
-function RecipeDetails() {
+function RecipeDetails({ type }: { type: string }) {
   const route = window.location.pathname.includes('meals') ? '/meals' : '/drinks';
   const { id } = useParams() as { id: string };
   useFetchRecommendations(route);
   const { recipe } = useFetchDetails(id, route);
+  const [isCopied, setIsCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleShareClick = async () => {
+    if (recipe) {
+      let recipeUrl;
+      if (type === 'meal' && recipe.idMeal) {
+        recipeUrl = `https://www.themealdb.com/meal/${recipe.idMeal}`;
+      } else if (type === 'drink' && recipe.idDrink) {
+        recipeUrl = `https://www.thecocktaildb.com/drink/${recipe.idDrink}`;
+      }
+      if (recipeUrl) {
+        navigator.clipboard.writeText(recipeUrl)
+          .then(() => {
+            setIsCopied(true);
+          })
+          .catch((error) => {
+            console.error('Error copying the link: ', error);
+          });
+      }
+    }
+  };
+
+  const handleFavoriteClick = () => {
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <div>
@@ -67,6 +95,33 @@ function RecipeDetails() {
         id={ id }
         route={ route }
       />
+      {isFavorite ? (
+        <button
+          data-testid="favorite-btn"
+          onClick={ handleFavoriteClick }
+        >
+          Desfavoritar
+        </button>
+      ) : (
+        <button
+          data-testid="favorite-btn"
+          onClick={ handleFavoriteClick }
+        >
+          Favoritar
+        </button>
+      )}
+      <button
+        data-testid="share-btn"
+        onClick={ handleShareClick }
+      >
+        Compartilhar
+        <img src={ shareIcon } alt="Ícone de Compartilhar" />
+      </button>
+      {isCopied && (
+        <div data-testid="share-message">
+          Link copied!
+        </div>
+      )}
     </div>
   );
 }
