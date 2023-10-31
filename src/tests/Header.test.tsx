@@ -3,93 +3,82 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import App from '../App';
 import renderWithRouter from './helpers/renderWith';
+import chickenMeals from './helpers/mocks/chickenMeals';
+import mealCategories from './helpers/mocks/mealCategories';
 
 /* TESTES PARA O HEADER */
 
 const profileBtnTestID = 'profile-top-btn';
 const pageTitleTestId = 'page-title';
 const searchTitleTestId = 'search-top-btn';
+const firstFectchMock = { json: async () => chickenMeals } as Response;
+const secondFectchMock = { json: async () => mealCategories } as Response;
 
-/* test('Verifica se os botões estão na tela e se a barra de pesquisa é mostrado quando o botão de pesquisa é clicado', async () => {
-  await act(async () => {
-    renderWithRouter(<App />, { route: '/meals' });
+describe('Testes componente Header', () => {
+  beforeEach(() => {
+    vi.spyOn(global, 'fetch')
+      .mockResolvedValueOnce(firstFectchMock)
+      .mockResolvedValueOnce(secondFectchMock);
   });
 
-  const searchBtn = await screen.findByTestId(searchTitleTestId);
-  const profileBtn = await screen.findByTestId(profileBtnTestID);
-  const pageTitle = await screen.findByTestId(pageTitleTestId);
+  test('Verifica se o botão de profile leva pra rota certa', async () => {
+    await act(async () => {
+      renderWithRouter(<App />, { route: '/meals' });
+    });
 
-  expect(searchBtn).toBeInTheDocument();
-  expect(profileBtn).toBeInTheDocument();
-  expect(pageTitle).toBeInTheDocument();
+    const profileBtn = await screen.findByTestId(profileBtnTestID);
 
-  await userEvent.click(searchBtn);
-}); */
-
-test('Verifica se o botão de profile leva pra rota certa', async () => {
-  vi.spyOn(global, 'fetch');
-
-  await act(async () => {
-    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(profileBtn);
+    await waitFor(() => expect(window.location.pathname).toBe('/profile'));
   });
 
-  const profileBtn = await screen.findByTestId(profileBtnTestID);
+  test('Verifica se o botão de search desaparece na rota /profile', async () => {
+    await act(async () => {
+      renderWithRouter(<App />, { route: '/meals' });
+    });
 
-  await userEvent.click(profileBtn);
-  await waitFor(() => expect(window.location.pathname).toBe('/profile'));
-});
+    const profileBtn = await screen.findByTestId(profileBtnTestID);
+    const searchBtn = await screen.findByTestId(searchTitleTestId);
 
-test('Verifica se o botão de search desaparece na rota /profile', async () => {
-  vi.spyOn(global, 'fetch');
-
-  await act(async () => {
-    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(profileBtn);
+    await waitFor(() => expect(searchBtn).not.toBeInTheDocument());
   });
 
-  const profileBtn = await screen.findByTestId(profileBtnTestID);
-  const searchBtn = await screen.findByTestId(searchTitleTestId);
+  test('Verifica se na rota /meals o texto Meals aparece no header além do ícon de busca e perfil', async () => {
+    await act(async () => {
+      renderWithRouter(<App />, { route: '/meals' });
+    });
 
-  await userEvent.click(profileBtn);
-  await waitFor(() => expect(searchBtn).not.toBeInTheDocument());
-});
+    const pageTitle = await screen.findByTestId(pageTitleTestId);
+    const searchBtn = await screen.findByTestId(searchTitleTestId);
+    const profileBtn = await screen.findByTestId(profileBtnTestID);
 
-test('Verifica se na rota /meals o texto Meals aparece no header além do ícon de busca e perfil', async () => {
-  vi.spyOn(global, 'fetch');
-
-  await act(async () => {
-    renderWithRouter(<App />, { route: '/meals' });
+    expect(pageTitle).toHaveTextContent('Meals');
+    expect(searchBtn).toBeInTheDocument();
+    expect(profileBtn).toBeInTheDocument();
   });
 
-  const pageTitle = await screen.findByTestId(pageTitleTestId);
-  const searchBtn = await screen.findByTestId(searchTitleTestId);
-  const profileBtn = await screen.findByTestId(profileBtnTestID);
+  test('Verifica se na rota /favorite-recipes o texto Favorite Recipes aparece no header além do ícon de perfil', async () => {
+    await act(async () => {
+      renderWithRouter(<App />, { route: '/favorite-recipes' });
+    });
 
-  expect(pageTitle).toHaveTextContent('Meals');
-  expect(searchBtn).toBeInTheDocument();
-  expect(profileBtn).toBeInTheDocument();
+    const profileBtn = await screen.findByTestId(profileBtnTestID);
+    const pageTitle = await screen.findByTestId(pageTitleTestId);
+
+    expect(pageTitle).toHaveTextContent('Favorite Recipes');
+    expect(profileBtn).toBeInTheDocument();
+  });
+
+  test('Verifica se na rota /done-recipes o texto Done Recipes aparece no header além do ícon de perfil', async () => {
+    await act(async () => {
+      renderWithRouter(<App />, { route: '/done-recipes' });
+    });
+
+    const profileBtn = await screen.findByTestId(profileBtnTestID);
+    const pageTitle = await screen.findByTestId(pageTitleTestId);
+
+    expect(pageTitle).toHaveTextContent('Done Recipes');
+    expect(profileBtn).toBeInTheDocument();
+  });
 });
-
-/* test('Verifica se na rota /done-recipes o texto Done Recipes aparece no header além do ícon de perfil porém sem o ícone de busca', async () => {
-  renderWithRouter(<App />, { route: '/done-recipes' });
-
-  const pageTitle = screen.getByTestId(pageTitleTestId);
-  const profileBtn = screen.getByTestId(profileBtnTestID);
-  const searchBtn = screen.queryByTestId(searchTitleTestId);
-
-  expect(pageTitle).toHaveTextContent('Done Recipes');
-  expect(profileBtn).toBeInTheDocument();
-  expect(searchBtn).not.toBeInTheDocument();
-}); */
-
-/* test('Verifica se na rota /favorite-recipes o texto Favorite Recipes aparece no header além do ícon de perfil porém sem o ícone de busca', async () => {
-  renderWithRouter(<App />, { route: '/favorite-recipes' });
-
-  const pageTitle = screen.getByTestId(pageTitleTestId);
-  const profileBtn = screen.getByTestId(profileBtnTestID);
-  const searchBtn = screen.queryByTestId(searchTitleTestId);
-
-  expect(pageTitle).toHaveTextContent('Favorite Recipes');
-  expect(profileBtn).toBeInTheDocument();
-  expect(searchBtn).not.toBeInTheDocument();
-});
- */
