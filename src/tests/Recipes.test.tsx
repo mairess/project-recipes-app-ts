@@ -21,9 +21,11 @@ describe('Testes do componente Recipes', () => {
       renderWithRouter(<App />, { route: '/meals' });
     });
 
+    const allBtn = screen.getByRole('button', { name: /all/i });
     const beefCategoryBtn = screen.getByRole('button', { name: /beef/i });
 
     await userEvent.click(beefCategoryBtn);
+    await userEvent.click(allBtn);
   });
 
   test('Teste de categoria Ordinary Drink', async () => {
@@ -38,8 +40,10 @@ describe('Testes do componente Recipes', () => {
       renderWithRouter(<App />, { route: '/drinks' });
     });
 
+    const allBtn = screen.getByRole('button', { name: /all/i });
     const drinkCategoryBtn = screen.getByRole('button', { name: /ordinary drink/i });
 
     await userEvent.click(drinkCategoryBtn);
+    await userEvent.click(allBtn);
   });
 });

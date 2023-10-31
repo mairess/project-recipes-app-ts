@@ -36,30 +36,16 @@ function RecipeDetails() {
     if (doneRecipesJSON) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     }
-
-    if (route === '/meals') {
-      const recipes = {
-        id: recipe?.idMeal,
-        type: 'meal',
-        nationality: recipe?.strArea,
-        category: recipe?.strCategory || '',
-        alcoholicOrNot: recipe?.strAlcoholic || '',
-        name: recipe?.strMeal,
-        image: recipe?.strMealThumb,
-      };
-      doneRecipes.push(recipes);
-    } else {
-      const recipes = {
-        id: recipe?.idDrink,
-        type: 'drink',
-        nationality: recipe?.strArea || '',
-        category: recipe?.strCategory || '',
-        alcoholicOrNot: recipe?.strAlcoholic || '',
-        name: recipe?.strDrink,
-        image: recipe?.strDrinkThumb,
-      };
-      doneRecipes.push(recipes);
-    }
+    const recipes = {
+      id: recipe?.idMeal || recipe?.idDrink,
+      type: route === '/meals' ? 'meal' : 'drink',
+      nationality: recipe?.strArea || '',
+      category: recipe?.strCategory || '',
+      alcoholicOrNot: recipe?.strAlcoholic || '',
+      name: recipe?.strMeal || recipe?.strDrink,
+      image: recipe?.strMealThumb || recipe?.strDrinkThumb,
+    };
+    doneRecipes.push(recipes);
     setIsFavorite(!isFavorite);
     localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
   };

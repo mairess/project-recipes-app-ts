@@ -4,7 +4,6 @@ export function Meals() {
   return (
     <div>
       <Header />
-
     </div>
   );
 }
