@@ -1,17 +1,19 @@
-import { NavLink } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 import { apiFilterDrinks, categoryMeals, drinksRequest,
   mealsRequest, requestAPImeals, requestApiCategory } from '../apiRecipes';
+import { RecipeContext } from '../context/RecipeContext';
 
-function Recipes({ recipesx, setToggleRecip }:
-{ recipesx: boolean, setToggleRecip: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const route = window.location.pathname.includes('meals') ? '/meals' : '/drinks';
+function Recipes() {
+  const { recipes: recipe, setRecipes: setRecipe } = useContext(RecipeContext);
+  const location = useLocation();
+  const route = location.pathname.includes('meals') ? '/meals' : '/drinks';
   const [loading, setLoading] = useState(false);
-  const [toggle, setToggle] = useState(false);
-  const [recipe, setRecipe] = useState([]);
+  const [toggle, setToggle] = useState('');
   const [categorys, setCategorys] = useState([]);
 
   async function handleClick(category: any) {
+    console.log(category);
     const apiRecipes = route === '/meals' ? await mealsRequest() : await drinksRequest();
     const apiCategory = route === '/meals' ? await requestAPImeals(category.strCategory)
       : await apiFilterDrinks(category.strCategory);
@@ -24,17 +26,11 @@ function Recipes({ recipesx, setToggleRecip }:
       console.log('bbbb');
     }
     setToggle(category.strCategory);
-    if (recipesx === false) {
-      setToggleRecip(true);
-    }
   }
 
   async function reset() {
     const apiRecipes = route === '/meals' ? await mealsRequest() : await drinksRequest();
     setRecipe(await apiRecipes);
-    if (recipesx === false) {
-      setToggleRecip(true);
-    }
   }
 
   useEffect(() => {
@@ -97,53 +93,30 @@ function Recipes({ recipesx, setToggleRecip }:
           </div>
         )}
 
-      {recipesx && (
-        route === '/meals' ? (
-          <div>
-            {
+      <div>
+        {
             recipe.slice(0, 12).map((param: any, index: any) => (
               <div
                 data-testid={ `${index}-recipe-card` }
-                key={ param.idMeal }
+                key={ param.idMeal || param.idDrink }
               >
                 <h3 data-testid={ `${index}-card-name` }>
-                  {param.strMeal}
+                  {param.strMeal || param.strDrink}
                 </h3>
-                <NavLink key={ param.strMeal } to={ `/meals/${param.idMeal}` }>
+                <NavLink
+                  key={ param.strMeal || param.strDrink }
+                  to={ `${route}/${param.idMeal || param.idDrink}` }
+                >
                   <img
-                    src={ param.strMealThumb }
+                    src={ param.strMealThumb || param.strDrinkThumb }
                     data-testid={ `${index}-card-img` }
-                    alt={ param.strMeal }
+                    alt={ param.strMeal || param.strDrink }
                   />
                 </NavLink>
               </div>
             ))
           }
-          </div>
-        )
-          : (
-            <div>
-              { recipe.slice(0, 12).map((drink: any, index: any) => (
-                <div
-                  data-testid={ `${index}-recipe-card` }
-                  key={ drink.idDrink }
-                >
-                  <h3
-                    data-testid={ `${index}-card-name` }
-                  >
-                    { drink.strDrink }
-                  </h3>
-                  <NavLink key={ drink.strDrink } to={ `/drinks/${drink.idDrink}` }>
-                    <img
-                      data-testid={ `${index}-card-img` }
-                      src={ drink.strDrinkThumb }
-                      alt={ drink.strDrink }
-                    />
-                  </NavLink>
-                </div>
-              ))}
-            </div>
-          ))}
+      </div>
     </div>
 
   );

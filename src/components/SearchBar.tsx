@@ -1,27 +1,25 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { MealType } from '../types';
+import { useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import searchIcon from '../images/searchIcon.svg';
-
-import Recipes from './Recipes';
+import { RecipeContext } from '../context/RecipeContext';
 
 function SearchBar() {
+  const { setRecipes } = useContext(RecipeContext);
+  const location = useLocation();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('');
-  const [foundRecipes, setFoundRecipes] = useState<MealType[]>([]);
   const [searchInput, setSearchInput] = useState(false);
   const FIRST_LETTER = 'first-letter';
   const INGREDIENT = 'ingredient';
   const NAME = 'name';
   const ALERT_MESSAGE = "Sorry, we haven't found any recipes for these filters.";
-  const [recipes, setToggleRecipes] = useState<boolean>(true);
 
   const handleRadioButton = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const isDrinkPage = window.location.pathname.includes('drinks');
+  const isDrinkPage = location.pathname.includes('drinks');
   const isValidSearch = () => searchType.length > 0;
   const getApiUrl = () => (isDrinkPage ? 'https://www.thecocktaildb.com/api/json/v1/1' : 'https://www.themealdb.com/api/json/v1/1');
 
@@ -43,19 +41,19 @@ function SearchBar() {
         const recipeId = data.drinks[0].idDrink;
         navigate(`/drinks/${recipeId}`);
       } else {
-        console.log(data.meals);
-        console.log(data.drinks);
+        // console.log(data.meals);
+        // console.log(data.drinks);
       }
       if (data.meals && data.meals.length >= 1) {
-        setFoundRecipes(data.meals.slice(0, 12));
+        setRecipes(data.meals.slice(0, 12));
       } else if (data.drinks && data.drinks.length >= 1) {
-        setFoundRecipes(data.drinks.slice(0, 12));
+        setRecipes(data.drinks.slice(0, 12));
       } else {
-        setFoundRecipes([]);
+        setRecipes([]);
         showAlert(ALERT_MESSAGE);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       showAlert(ALERT_MESSAGE);
     }
   };
@@ -79,11 +77,8 @@ function SearchBar() {
       endpoint = `${apiUrl}/search.php?s=${searchType}`;
     }
     await fetchAndDisplayData(endpoint);
-    if (recipes) {
-      setToggleRecipes(false);
-    }
   };
-  console.log(recipes);
+  // console.log(recipes);
 
   return (
     <div>
@@ -155,30 +150,6 @@ function SearchBar() {
           alt="search icon"
         />
       </button>
-      <Recipes recipesx={ recipes } setToggleRecip={ setToggleRecipes } />
-      {recipes === false && (
-        <div>
-          {foundRecipes.length > 0 && (
-            <div>
-              {foundRecipes.map((recipe, index) => (
-                <div key={ index } data-testid={ `${index}-recipe-card` }>
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ recipe.strMealThumb || recipe.strDrinkThumb }
-                    alt={ recipe.strMeal || recipe.strDrink }
-                  />
-                  <p
-                    data-testid={ `${index}-card-name` }
-                  >
-                    {recipe.strMeal || recipe.strDrink}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
     </div>
   );
 }

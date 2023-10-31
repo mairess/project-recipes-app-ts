@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { MealType } from '../types';
 import Recomendations from './Recomendations';
@@ -12,7 +12,8 @@ import whitheHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 
 function RecipeDetails() {
-  const route = window.location.pathname.includes('meals') ? '/meals' : '/drinks';
+  const location = useLocation();
+  const route = location.pathname.includes('meals') ? '/meals' : '/drinks';
   const { id } = useParams() as { id: string };
   useFetchRecommendations(route);
   const { recipe } = useFetchDetails(id, route);
@@ -30,7 +31,7 @@ function RecipeDetails() {
     setIsCopied(true);
   };
 
-  console.log(findRecipes);
+  // console.log(findRecipes);
 
   const handleFavoriteClick = () => {
     if (doneRecipesJSON) {
@@ -49,7 +50,7 @@ function RecipeDetails() {
     setIsFavorite(!isFavorite);
     localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
   };
-  console.log(recipe);
+  // console.log(recipe);
 
   const handleUnFavClick = () => {
     if (findRecipes !== undefined) {
@@ -58,7 +59,7 @@ function RecipeDetails() {
     localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
     setIsFavorite(!isFavorite);
   };
-  console.log(findRecipes);
+  // console.log(findRecipes);
 
   return (
     <div>
