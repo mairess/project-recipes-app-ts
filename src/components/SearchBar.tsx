@@ -1,8 +1,9 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MealType } from '../types';
 import searchIcon from '../images/searchIcon.svg';
-import RecipeContext from './context/RecipesContext';
+
+import Recipes from './Recipes';
 
 function SearchBar() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function SearchBar() {
   const INGREDIENT = 'ingredient';
   const NAME = 'name';
   const ALERT_MESSAGE = "Sorry, we haven't found any recipes for these filters.";
-  const { recipes, toggleRecipes } = useContext(RecipeContext);
+  const [recipes, setToggleRecipes] = useState<boolean>(true);
 
   const handleRadioButton = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -79,7 +80,7 @@ function SearchBar() {
     }
     await fetchAndDisplayData(endpoint);
     if (recipes) {
-      toggleRecipes();
+      setToggleRecipes(false);
     }
   };
   console.log(recipes);
@@ -154,6 +155,7 @@ function SearchBar() {
           alt="search icon"
         />
       </button>
+      <Recipes recipesx={ recipes } setToggleRecip={ setToggleRecipes } />
       {recipes === false && (
         <div>
           {foundRecipes.length > 0 && (

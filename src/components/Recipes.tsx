@@ -1,16 +1,15 @@
 import { NavLink } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
-import RecipeContext from './context/RecipesContext';
+import { useEffect, useState } from 'react';
 import { apiFilterDrinks, categoryMeals, drinksRequest,
   mealsRequest, requestAPImeals, requestApiCategory } from '../apiRecipes';
 
-function Recipes() {
+function Recipes({ recipesx, setToggleRecip }:
+{ recipesx: boolean, setToggleRecip: React.Dispatch<React.SetStateAction<boolean>> }) {
   const route = window.location.pathname.includes('meals') ? '/meals' : '/drinks';
   const [loading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [recipe, setRecipe] = useState([]);
   const [categorys, setCategorys] = useState([]);
-  const { recipes, toggleRecipes } = useContext(RecipeContext);
 
   async function handleClick(category: any) {
     const apiRecipes = route === '/meals' ? await mealsRequest() : await drinksRequest();
@@ -25,16 +24,16 @@ function Recipes() {
       console.log('bbbb');
     }
     setToggle(category.strCategory);
-    if (recipes === false) {
-      toggleRecipes();
+    if (recipesx === false) {
+      setToggleRecip(true);
     }
   }
 
   async function reset() {
     const apiRecipes = route === '/meals' ? await mealsRequest() : await drinksRequest();
     setRecipe(await apiRecipes);
-    if (recipes === false) {
-      toggleRecipes();
+    if (recipesx === false) {
+      setToggleRecip(true);
     }
   }
 
@@ -97,7 +96,8 @@ function Recipes() {
             ))}
           </div>
         )}
-      {recipes && (
+
+      {recipesx && (
         route === '/meals' ? (
           <div>
             {

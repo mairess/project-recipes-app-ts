@@ -34,14 +34,15 @@ export default function Header() {
           data-testid="profile-top-btn"
         />
       </button>
+      <h1 data-testid="page-title">
+        { getHeaderTitle() }
+      </h1>
       {shouldShowSearchIcon() && (
         <span>
           <SearchBar />
         </span>
       )}
-      <h1 data-testid="page-title">
-        { getHeaderTitle() }
-      </h1>
+
     </div>
   );
 }
