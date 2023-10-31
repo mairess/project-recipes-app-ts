@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MealType } from '../types';
 import searchIcon from '../images/searchIcon.svg';
+import RecipeContext from './context/RecipesContext';
 
 function SearchBar() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function SearchBar() {
   const INGREDIENT = 'ingredient';
   const NAME = 'name';
   const ALERT_MESSAGE = "Sorry, we haven't found any recipes for these filters.";
+  const { recipes, toggleRecipes } = useContext(RecipeContext);
 
   const handleRadioButton = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -76,7 +78,11 @@ function SearchBar() {
       endpoint = `${apiUrl}/search.php?s=${searchType}`;
     }
     await fetchAndDisplayData(endpoint);
+    if (recipes) {
+      toggleRecipes();
+    }
   };
+  console.log(recipes);
 
   return (
     <div>
@@ -148,24 +154,29 @@ function SearchBar() {
           alt="search icon"
         />
       </button>
-      {foundRecipes.length > 0 && (
+      {recipes === false && (
         <div>
-          {foundRecipes.map((recipe, index) => (
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ recipe.strMealThumb || recipe.strDrinkThumb }
-                alt={ recipe.strMeal || recipe.strDrink }
-              />
-              <p
-                data-testid={ `${index}-card-name` }
-              >
-                {recipe.strMeal || recipe.strDrink}
-              </p>
+          {foundRecipes.length > 0 && (
+            <div>
+              {foundRecipes.map((recipe, index) => (
+                <div key={ index } data-testid={ `${index}-recipe-card` }>
+                  <img
+                    data-testid={ `${index}-card-img` }
+                    src={ recipe.strMealThumb || recipe.strDrinkThumb }
+                    alt={ recipe.strMeal || recipe.strDrink }
+                  />
+                  <p
+                    data-testid={ `${index}-card-name` }
+                  >
+                    {recipe.strMeal || recipe.strDrink}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       )}
+
     </div>
   );
 }

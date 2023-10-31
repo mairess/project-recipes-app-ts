@@ -8,6 +8,8 @@ import { Iframe, Img } from './styles/RecipeDetailsStyle';
 import ButtonRecipe from './ButtonRecipe';
 import shareIcon from '../images/shareIcon.svg';
 import { Button } from './styles/ButtonFavShare';
+import whitheHeart from '../images/whiteHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
 
 function RecipeDetails() {
   const route = window.location.pathname.includes('meals') ? '/meals' : '/drinks';
@@ -17,6 +19,10 @@ function RecipeDetails() {
   const [isCopied, setIsCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
+  const doneRecipesJSON = localStorage.getItem('favoriteRecipes');
+  const doneRecipes = doneRecipesJSON ? JSON.parse(doneRecipesJSON) : [];
+  const findRecipes = doneRecipes.findIndex((recipes: any) => recipes.id === id);
+
   const handleShareClick = () => {
     const { origin, pathname } = window.location;
     const link = `${origin}${pathname}`;
@@ -24,9 +30,49 @@ function RecipeDetails() {
     setIsCopied(true);
   };
 
+  console.log(findRecipes);
+
   const handleFavoriteClick = () => {
+    if (doneRecipesJSON) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+
+    if (route === '/meals') {
+      const recipes = {
+        id: recipe?.idMeal,
+        type: 'meal',
+        nationality: recipe?.strArea,
+        category: recipe?.strCategory || '',
+        alcoholicOrNot: recipe?.strAlcoholic || '',
+        name: recipe?.strMeal,
+        image: recipe?.strMealThumb,
+      };
+      doneRecipes.push(recipes);
+    } else {
+      const recipes = {
+        id: recipe?.idDrink,
+        type: 'drink',
+        nationality: recipe?.strArea || '',
+        category: recipe?.strCategory || '',
+        alcoholicOrNot: recipe?.strAlcoholic || '',
+        name: recipe?.strDrink,
+        image: recipe?.strDrinkThumb,
+      };
+      doneRecipes.push(recipes);
+    }
+    setIsFavorite(!isFavorite);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
+  };
+  console.log(recipe);
+
+  const handleUnFavClick = () => {
+    if (findRecipes !== undefined) {
+      doneRecipes.splice(findRecipes, 1);
+    }
+    localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
     setIsFavorite(!isFavorite);
   };
+  console.log(findRecipes);
 
   return (
     <div>
@@ -90,21 +136,19 @@ function RecipeDetails() {
           Link copied!
         </div>
       )}
-      {isFavorite ? (
+      {findRecipes !== -1 ? (
         <Button
-          data-testid="favorite-btn"
-          onClick={ handleFavoriteClick }
+          onClick={ handleUnFavClick }
           className="custom-button"
         >
-          Desfavoritar
+          <img data-testid="favorite-btn" src={ blackHeart } alt="Desfavoritar" />
         </Button>
       ) : (
         <Button
-          data-testid="favorite-btn"
           onClick={ handleFavoriteClick }
           className="custom-button"
         >
-          Favoritar
+          <img data-testid="favorite-btn" src={ whitheHeart } alt="Favoritar" />
         </Button>
       )}
       <Recomendations
