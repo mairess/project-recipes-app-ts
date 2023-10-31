@@ -20,7 +20,6 @@ export default function Drinks() {
     const response = await fetch(URL);
     const data = await response.json();
     const filterData = data.drinks;
-    console.log(filterData);
     return filterData;
   }
 
@@ -29,7 +28,6 @@ export default function Drinks() {
     const response = await fetch(URL);
     const data = await response.json();
     const filterData = data.drinks;
-    console.log(filterData);
     return filterData;
   }
 
