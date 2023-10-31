@@ -1,5 +1,5 @@
 const drinksByFirstLetter = {
-  meals: [
+  drinks: [
     {
       strMeal: 'B-52',
       strMealThumb: 'https://www.thecocktaildb.com/images/media/drink/5a3vg61504372070.jpg',

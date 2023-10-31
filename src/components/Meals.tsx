@@ -1,12 +1,11 @@
 import Header from './Header';
+import Recipes from './Recipes';
 
 export function Meals() {
   return (
     <div>
       <Header />
-      <p>
-        comer comer é o melhor para poder crescer!
-      </p>
+      <Recipes />
     </div>
   );
 }
