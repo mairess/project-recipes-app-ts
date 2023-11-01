@@ -13,9 +13,9 @@ export default function Header() {
   const getHeaderTitle = () => {
     if (pathname === '/meals') return 'Meals';
     if (pathname === '/drinks') return 'Drinks';
-    if (pathname === '/profile') return 'Profile';
+    // if (pathname === '/profile') return 'Profile';
     if (pathname === '/done-recipes') return 'Done Recipes';
-    if (pathname === '/favorite-recipes') return 'Favorite Recipes';
+    // if (pathname === '/favorite-recipes') return 'Favorite Recipes';
   };
 
   const handleClickProfile = () => {

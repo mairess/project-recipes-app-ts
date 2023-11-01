@@ -1,12 +1,13 @@
+import FilterBar from './FilterBar';
 import Header from './Header';
+import Cards from './Card';
 
 export default function FavoriteRecipes() {
   return (
     <div>
       <Header />
-      <p>
-        Você já comeu isso, e adorou.
-      </p>
+      <FilterBar />
+      <Cards />
     </div>
   );
 }
