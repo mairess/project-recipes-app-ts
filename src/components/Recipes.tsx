@@ -13,25 +13,24 @@ function Recipes() {
   const [categorys, setCategorys] = useState([]);
 
   async function handleClick(category: any) {
-    console.log(category);
     const apiRecipes = route === '/meals' ? await mealsRequest() : await drinksRequest();
     const apiCategory = route === '/meals' ? await requestAPImeals(category.strCategory)
       : await apiFilterDrinks(category.strCategory);
     if (toggle === category.strCategory) {
       setRecipe(await apiRecipes);
+      setToggle('');
       console.log('aaaa');
     } else {
       const filterMeals = await apiCategory;
       setRecipe(filterMeals);
+      setToggle(category.strCategory);
       console.log('bbbb');
     }
-    setToggle(category.strCategory);
   }
 
-  async function reset() {
-    const apiRecipes = route === '/meals' ? await mealsRequest() : await drinksRequest();
-    setRecipe(await apiRecipes);
-  }
+  const reset = async () => setRecipe(route === '/meals'
+    ? await mealsRequest()
+    : await drinksRequest());
 
   useEffect(() => {
     async function requestAPI() {
@@ -58,7 +57,7 @@ function Recipes() {
           <div>
             <button
               data-testid="All-category-filter"
-              onClick={ () => reset() }
+              onClick={ reset }
             >
               All
             </button>
