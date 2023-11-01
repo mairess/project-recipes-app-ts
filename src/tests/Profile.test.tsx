@@ -2,10 +2,12 @@ import { screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import renderWithRouter from './helpers/renderWith';
 
-const testMail = 'vitoria@mail.com';
+const mail = {
+  email: 'vitoria@mail.com',
+};
 
-test('Verifica se os inputs estão presentes na tela e se o componente recupera o localStorage.', async () => {
-  localStorage.setItem('user', JSON.stringify(testMail));
+test('Verifica se os inputs estão presentes na tela e se o componente recupera o localStorage.', () => {
+  localStorage.setItem('user', JSON.stringify(mail));
   renderWithRouter(<App />, { route: '/profile' });
 
   const userMail = screen.getByTestId('profile-email');
@@ -13,10 +15,11 @@ test('Verifica se os inputs estão presentes na tela e se o componente recupera 
   const favoriteRecipesBtn = screen.getByTestId('profile-favorite-btn');
   const logoutBtn = screen.getByTestId('profile-logout-btn');
 
-  expect(userMail).toBeInTheDocument();
-  expect(doneRecipesBtn).toBeInTheDocument();
-  expect(favoriteRecipesBtn).toBeInTheDocument();
-  expect(logoutBtn).toBeInTheDocument();
+  expect(userMail).toBeVisible();
+  expect(userMail).toHaveTextContent('vitoria@mail.com');
+  expect(doneRecipesBtn).toBeVisible();
+  expect(favoriteRecipesBtn).toBeVisible();
+  expect(logoutBtn).toBeVisible();
 
   localStorage.clear();
 });
