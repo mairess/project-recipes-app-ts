@@ -72,7 +72,7 @@ describe('Testes do componente Recipes', () => {
     expect(await screen.findByRole('img', { name: /151 Florida Bushwacker/i })).toBeInTheDocument();
   });
 
-  test('Novo teste', async () => {
+  test('Testa reset de receitas em /meals', async () => {
     const firstFetchMock = { json: async () => chickenMeals } as Response;
     const secondFetchMock = { json: async () => mealCategories } as Response;
     const thirdFetchMock = { json: async () => beefMeals } as Response;
@@ -103,7 +103,7 @@ describe('Testes do componente Recipes', () => {
     expect(chickenMeal).toBeInTheDocument();
   });
 
-  test('Outro teste', async () => {
+  test('Testa reset de receitas em /drinks', async () => {
     const firstFetchMock = { json: async () => milkDrinks } as Response;
     const secondFetchMock = { json: async () => drinkCategories } as Response;
     const thirdFetchMock = { json: async () => ordinaryDrinks } as Response;
