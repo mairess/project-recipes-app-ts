@@ -5,7 +5,7 @@ type ContextType = {
   filter: string;
   setFilter: (filter: string) => void;
   handleFilterClick: (newFilter: string) => void;
-  // filteredFavorites: FavoriteRecipe[];
+  filteredFavorites: FavoriteRecipe[];
   handleRemoveFavorite: (recipeId: string) => void
 };
 

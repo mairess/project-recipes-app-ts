@@ -14,6 +14,16 @@ function FilterProvider({ children }: FilterProviderProps) {
     setFilter(newFilter);
   };
 
+  const filteredFavorites = favoritesRecipes.filter((recipe) => {
+    if (filter === 'meals') {
+      return recipe.type === 'meal';
+    }
+    if (filter === 'drinks') {
+      return recipe.type === 'drink';
+    }
+    return true;
+  });
+
   const handleRemoveFavorite = (recipeId: string) => {
     const updatedFavorites = favoritesRecipes.filter((recipe) => recipe.id !== recipeId);
     setFavoritesRecipes(updatedFavorites);
@@ -27,6 +37,7 @@ function FilterProvider({ children }: FilterProviderProps) {
         setFilter,
         handleFilterClick,
         handleRemoveFavorite,
+        filteredFavorites,
       } }
     >
       {children}
