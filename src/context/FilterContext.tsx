@@ -6,6 +6,7 @@ type ContextType = {
   setFilter: (filter: string) => void;
   handleFilterClick: (newFilter: string) => void;
   // filteredFavorites: FavoriteRecipe[];
+  handleRemoveFavorite: (recipeId: string) => void
 };
 
 const FilterContext = createContext({} as ContextType);

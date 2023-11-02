@@ -6,8 +6,8 @@ import CardButtons from './CardButtons';
 import FilterContext from '../context/FilterContext';
 
 function Card() {
-  const { favoritesRecipes, setFavoritesRecipes } = useFavoritesLocalStore();
-  const { filter } = useContext(FilterContext);
+  const { favoritesRecipes } = useFavoritesLocalStore();
+  const { filter, handleRemoveFavorite } = useContext(FilterContext);
 
   const filteredFavorites = favoritesRecipes.filter((recipe) => {
     if (filter === 'meals') {
@@ -19,11 +19,11 @@ function Card() {
     return true;
   });
 
-  const handleRemoveFavorite = (recipeId: string) => {
-    const updatedFavorites = favoritesRecipes.filter((recipe) => recipe.id !== recipeId);
-    setFavoritesRecipes(updatedFavorites);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
-  };
+  // const handleRemoveFavorite = (recipeId: string) => {
+  //   const updatedFavorites = favoritesRecipes.filter((recipe) => recipe.id !== recipeId);
+  //   setFavoritesRecipes(updatedFavorites);
+  //   localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
+  // };
 
   return (
     <div>
