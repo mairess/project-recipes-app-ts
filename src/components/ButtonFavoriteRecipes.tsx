@@ -5,12 +5,15 @@ type ButtonProps = {
   altText: string;
   buttonText: string;
   datatestid: string;
+  onClick: () => void;
 };
 
-function ButtonFavoriteRecipes({ imgSrc, altText, buttonText, datatestid }: ButtonProps) {
+function ButtonFavoriteRecipes({ imgSrc, altText, buttonText, datatestid,
+  onClick }: ButtonProps) {
   return (
     <Container>
       <Button
+        onClick={ onClick }
         data-testid={ datatestid }
       >
         <Img src={ imgSrc } alt={ altText } />

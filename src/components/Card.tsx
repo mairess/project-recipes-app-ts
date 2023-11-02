@@ -1,10 +1,23 @@
+import { useContext } from 'react';
 import useFavoritesLocalStore from '../hooks/useFavoritesLocalStore';
 import { ButtonsWrapper, Container, Img, Wrapper, Name, Infos,
   Nationality } from './styles/FavoriteRecipesStyle';
 import CardButtons from './CardButtons';
+import { FilterContext } from '../context/FilterContext';
 
 function Card() {
   const { favoritesRecipes, setFavoritesRecipes } = useFavoritesLocalStore();
+  const { filter } = useContext(FilterContext);
+
+  const filteredFavorites = favoritesRecipes.filter((recipe) => {
+    if (filter === 'meals') {
+      return recipe.type === 'meal';
+    }
+    if (filter === 'drinks') {
+      return recipe.type === 'drink';
+    }
+    return true;
+  });
 
   const handleRemoveFavorite = (recipeId: string) => {
     const updatedFavorites = favoritesRecipes.filter((recipe) => recipe.id !== recipeId);
@@ -14,7 +27,7 @@ function Card() {
 
   return (
     <div>
-      {favoritesRecipes.map((recipe, index) => (
+      {filteredFavorites.map((recipe, index) => (
         <Container key={ recipe.id }>
           <Img
             data-testid={ `${index}-horizontal-image` }

@@ -1,11 +1,18 @@
+import { useContext } from 'react';
 import ButtonFavoriteRecipes from './ButtonFavoriteRecipes';
 import iconAllFoods from '../images/iconAllFoods.svg';
 import incoMeals from '../images/iconMeals.svg';
 import incoDrinks from '../images/iconDrinks.svg';
 import iconFavorite from '../images/iconFavorite.svg';
 import { Title, Contaiber } from './styles/FilterBarStyle';
+import { FilterContext } from '../context/FilterContext';
 
 function FilterBar() {
+  const { setFilter } = useContext(FilterContext);
+
+  const handleFilterClick = (newFilter: string) => {
+    setFilter(newFilter);
+  };
   return (
     <>
       <Title>
@@ -18,18 +25,21 @@ function FilterBar() {
       </Title>
       <Contaiber>
         <ButtonFavoriteRecipes
+          onClick={ () => handleFilterClick('all') }
           datatestid="filter-by-all-btn"
           imgSrc={ iconAllFoods }
           altText="AllFoods"
           buttonText="All foods"
         />
         <ButtonFavoriteRecipes
+          onClick={ () => handleFilterClick('meals') }
           datatestid="filter-by-meal-btn"
           imgSrc={ incoMeals }
           altText="Only foods"
           buttonText="Meals"
         />
         <ButtonFavoriteRecipes
+          onClick={ () => handleFilterClick('drinks') }
           datatestid="filter-by-drink-btn"
           imgSrc={ incoDrinks }
           altText="Only foods"
