@@ -1,28 +1,13 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ButtonsWrapper, Container, Img, Wrapper, Name, Infos,
   Nationality } from './styles/FavoriteRecipesStyle';
 import CardButtons from './CardButtons';
 import FilterContext from '../context/FilterContext';
-import { FavoriteRecipe } from '../types';
+import useNavigateToDetails from '../hooks/useNavigateToDetails';
 
 function Card() {
   const { handleRemoveFavorite, filteredFavorites } = useContext(FilterContext);
-  const navigate = useNavigate();
-
-  const handleImageClick = (recipe: FavoriteRecipe) => {
-    let path = '';
-
-    if (recipe.type === 'meal') {
-      path = `/meals/${recipe.id}`;
-    }
-
-    if (recipe.type === 'drink') {
-      path = `/drinks/${recipe.id}`;
-    }
-
-    navigate(path);
-  };
+  const handleImageClick = useNavigateToDetails();
 
   return (
     <div>
