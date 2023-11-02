@@ -34,9 +34,15 @@ export default function Header() {
           data-testid="profile-top-btn"
         />
       </button>
-      <h1 data-testid="page-title">
-        { getHeaderTitle() }
-      </h1>
+      {(pathname === '/profile' || pathname === '/favorite-recipes') ? (
+        <h1>
+          { getHeaderTitle() }
+        </h1>
+      ) : (
+        <h1 data-testid="page-title">
+          { getHeaderTitle() }
+        </h1>
+      )}
       {shouldShowSearchIcon() && (
         <span>
           <SearchBar />
