@@ -1,11 +1,11 @@
 import Button from './ButtonProfile';
-import useProfile from '../hooks/useProfile';
-import logout from '../images/logout.svg';
-import favorite from '../images/favorite.svg';
-import done from '../images/done.svg';
-import icoProfile from '../images/Perfil.svg';
+import useProfile from '../../hooks/useProfile';
+import logout from '../../images/logout.svg';
+import favorite from '../../images/favorite.svg';
+import done from '../../images/done.svg';
+import icoProfile from '../../images/Perfil.svg';
 import { Container, ContainerDoneRecipes, Title,
-  ContainerFavoriteRecipes, ContainerLogout, Line } from './styles/ButtonsProfileStyle';
+  ContainerFavoriteRecipes, ContainerLogout, Line } from '../styles/ButtonsProfileStyle';
 
 function ButtonsProfile() {
   const { handleUserMail, handleLogout, navigate } = useProfile();

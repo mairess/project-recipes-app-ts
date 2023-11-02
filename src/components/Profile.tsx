@@ -1,5 +1,5 @@
 import Header from './Header';
-import ButtonsProfile from './ButtonsProfile';
+import ButtonsProfile from './buttons/ButtonsProfile';
 
 export default function Profile() {
   return (

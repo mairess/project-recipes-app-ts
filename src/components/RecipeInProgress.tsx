@@ -4,10 +4,13 @@ import { mealsInProgress, drinksInProgress } from '../apiRecipes';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import useFetchDetails from '../hooks/useFetchDetails';
 
 function RecipeInProgress() {
   const route = window.location.pathname.includes('meals');
+  const { id } = useParams() as { id: string };
   const params = useParams();
+  const { recipe } = useFetchDetails(id, route ? '/meals' : '/drinks');
   const [mealsFilter, setMealsFilter] = useState<any>('');
   const [drinksFilter, setDrinksFilter] = useState<any>('');
   const [checkboxStates, setCheckboxStates] = useState<any>([]);
@@ -15,18 +18,20 @@ function RecipeInProgress() {
   const [isCopied, setIsCopied] = useState(false);
   const doneRecipesJSON = localStorage.getItem('favoriteRecipes');
   const doneRecipes = doneRecipesJSON ? JSON.parse(doneRecipesJSON) : [];
+  const findRecipes = doneRecipes.findIndex((recipes: any) => recipes.id === id);
 
   useEffect(() => {
-    const request = async () => {
+    const fetchRecipesAndCheckFavorite = async () => {
       if (route) {
         setMealsFilter(await mealsInProgress(params));
-      }
-      if (!route) {
+      } else {
         setDrinksFilter(await drinksInProgress(params));
       }
+      setIsFavorited(findRecipes !== -1);
     };
-    request();
-  }, [params, route]);
+
+    fetchRecipesAndCheckFavorite();
+  }, [id, route, findRecipes, params]);
 
   useEffect(() => {
     const progressKey = route ? 'mealsProgress' : 'drinksProgress';
@@ -68,8 +73,24 @@ function RecipeInProgress() {
   };
 
   const handleFavoriteClick = () => {
-    localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
-    setIsFavorited(!isFavorited);
+    if (findRecipes === -1) {
+      const recipes = {
+        id: recipe?.idMeal || recipe?.idDrink,
+        type: route ? '/meals' : '/drinks',
+        nationality: recipe?.strArea || '',
+        category: recipe?.strCategory || '',
+        alcoholicOrNot: recipe?.strAlcoholic || '',
+        name: recipe?.strMeal || recipe?.strDrink,
+        image: recipe?.strMealThumb || recipe?.strDrinkThumb,
+      };
+      doneRecipes.push(recipes);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
+      setIsFavorited(true);
+    } else {
+      doneRecipes.splice(findRecipes, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
+      setIsFavorited(false);
+    }
   };
 
   return (
@@ -106,11 +127,12 @@ function RecipeInProgress() {
           )}
           <button
             onClick={ handleFavoriteClick }
+            className="custom-button"
           >
             <img
               data-testid="favorite-btn"
               src={ isFavorited ? blackHeart : whiteHeart }
-              alt="Favorite button"
+              alt="Favoritar"
             />
           </button>
           <h2 className="ola">Ingredients</h2>
@@ -170,17 +192,17 @@ function RecipeInProgress() {
           )}
           <button
             onClick={ handleFavoriteClick }
+            className="custom-button"
           >
             <img
               data-testid="favorite-btn"
               src={ isFavorited ? blackHeart : whiteHeart }
-              alt="Favorite button"
+              alt="Favoritar"
             />
           </button>
           <h2>Ingredients</h2>
           {ingredientsDrinks.map((ingre: any, index: any) => (
             <div key={ ingre }>
-              <br />
               <label
                 data-testid={ `${index}-ingredient-step` }
                 style={
