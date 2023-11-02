@@ -8,13 +8,11 @@ const handleCopuToClipBoard = (recipe: FavoriteRecipe) => {
   if (recipe.type === 'meal') {
     URL = `${origin}/meals/${recipe.id}`;
     navigator.clipboard.writeText(URL);
-    console.log(origin);
   }
 
   if (recipe.type === 'drink') {
     URL = `${origin}/drinks/${recipe.id}`;
     navigator.clipboard.writeText(URL);
-    console.log(origin);
   }
   swal('Link copied!', '', 'success');
 };
