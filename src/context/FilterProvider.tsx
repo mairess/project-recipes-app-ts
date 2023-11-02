@@ -7,11 +7,17 @@ type FilterProviderProps = {
 
 function FilterProvider({ children }: FilterProviderProps) {
   const [filter, setFilter] = useState('all');
+
+  const handleFilterClick = (newFilter: string) => {
+    setFilter(newFilter);
+  };
+
   return (
     <FilterContext.Provider
       value={ {
         filter,
         setFilter,
+        handleFilterClick,
       } }
     >
       {children}

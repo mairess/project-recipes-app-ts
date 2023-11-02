@@ -3,12 +3,12 @@ import { FavoriteRecipe } from '../types';
 
 const useFavoritesLocalStore = () => {
   const [favoritesRecipes, setFavoritesRecipes] = useState<FavoriteRecipe[]>([]);
+  const storedData = localStorage.getItem('favoriteRecipes');
 
   useEffect(() => {
-    const storedData = localStorage.getItem('favoriteRecipes');
     const favorites: FavoriteRecipe[] = storedData ? JSON.parse(storedData) : [];
     setFavoritesRecipes(favorites);
-  }, []);
+  }, [storedData]);
 
   return {
     favoritesRecipes,

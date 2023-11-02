@@ -8,11 +8,7 @@ import { Title, Contaiber } from './styles/FilterBarStyle';
 import FilterContext from '../context/FilterContext';
 
 function FilterBar() {
-  const { setFilter } = useContext(FilterContext);
-
-  const handleFilterClick = (newFilter: string) => {
-    setFilter(newFilter);
-  };
+  const { handleFilterClick } = useContext(FilterContext);
   return (
     <>
       <Title>
