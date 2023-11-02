@@ -1,7 +1,7 @@
 import FilterBar from './FilterBar';
 import Header from './Header';
 import Cards from './Card';
-import { FilterProvider } from '../context/FilterContext';
+import FilterProvider from '../context/FilterProvider';
 
 export default function FavoriteRecipes() {
   return (

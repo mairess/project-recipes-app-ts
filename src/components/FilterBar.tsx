@@ -5,7 +5,7 @@ import incoMeals from '../images/iconMeals.svg';
 import incoDrinks from '../images/iconDrinks.svg';
 import iconFavorite from '../images/iconFavorite.svg';
 import { Title, Contaiber } from './styles/FilterBarStyle';
-import { FilterContext } from '../context/FilterContext';
+import FilterContext from '../context/FilterContext';
 
 function FilterBar() {
   const { setFilter } = useContext(FilterContext);

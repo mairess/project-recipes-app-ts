@@ -3,7 +3,7 @@ import useFavoritesLocalStore from '../hooks/useFavoritesLocalStore';
 import { ButtonsWrapper, Container, Img, Wrapper, Name, Infos,
   Nationality } from './styles/FavoriteRecipesStyle';
 import CardButtons from './CardButtons';
-import { FilterContext } from '../context/FilterContext';
+import FilterContext from '../context/FilterContext';
 
 function Card() {
   const { favoritesRecipes, setFavoritesRecipes } = useFavoritesLocalStore();
