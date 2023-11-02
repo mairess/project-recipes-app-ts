@@ -31,8 +31,6 @@ function RecipeDetails() {
     setIsCopied(true);
   };
 
-  // console.log(findRecipes);
-
   const handleFavoriteClick = () => {
     if (doneRecipesJSON) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
@@ -50,7 +48,6 @@ function RecipeDetails() {
     setIsFavorite(!isFavorite);
     localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
   };
-  // console.log(recipe);
 
   const handleUnFavClick = () => {
     if (findRecipes !== undefined) {
@@ -59,7 +56,6 @@ function RecipeDetails() {
     localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
     setIsFavorite(!isFavorite);
   };
-  // console.log(findRecipes);
 
   return (
     <div>

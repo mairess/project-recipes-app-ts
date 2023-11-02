@@ -7,6 +7,7 @@ import Profile from './components/Profile';
 import FavoriteRecipes from './components/FavoriteRecipes';
 import RecipeDetails from './components/RecipeDetails';
 import DoneRecipes from './components/DoneRecipes';
+import RecipeInProgress from './components/RecipeInProgress';
 import Footer from './components/Footer';
 import { RecipeProvider } from './context/RecipeContext';
 
@@ -24,6 +25,8 @@ function App() {
         <Route path="/drinks/:id" element={ <RecipeDetails /> } />
         <Route path="/done-recipes" element={ <DoneRecipes /> } />
         <Route path="/favorite-recipes" element={ <FavoriteRecipes /> } />
+        <Route path="/meals/:id/in-progress" element={ <RecipeInProgress /> } />
+        <Route path="/drinks/:id/in-progress" element={ <RecipeInProgress /> } />
       </Routes>
     </RecipeProvider>
   );
