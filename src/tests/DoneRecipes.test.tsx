@@ -28,7 +28,7 @@ const doneRecipes = [
 ];
 
 describe('Testes do componente DoneRecipes', () => {
-  test('Primeiro teste', async () => {
+  test('Testa funcionamento dos elementos na página', async () => {
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 
     const { user } = renderWithRouter(<App />, { route: '/done-recipes' });
