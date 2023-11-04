@@ -5,7 +5,7 @@ import Recomendations from './Recomendations';
 import useFetchRecommendations from '../hooks/useFetchRecommendation';
 import useFetchDetails from '../hooks/useFetchDetails';
 import { Iframe, Img } from './styles/RecipeDetailsStyle';
-import ButtonRecipe from './ButtonRecipe';
+import ButtonRecipe from './buttons/ButtonRecipe';
 import shareIcon from '../images/shareIcon.svg';
 import { Button } from './styles/ButtonFavShare';
 import whitheHeart from '../images/whiteHeartIcon.svg';
@@ -31,8 +31,6 @@ function RecipeDetails() {
     setIsCopied(true);
   };
 
-  // console.log(findRecipes);
-
   const handleFavoriteClick = () => {
     if (doneRecipesJSON) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
@@ -50,7 +48,6 @@ function RecipeDetails() {
     setIsFavorite(!isFavorite);
     localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
   };
-  // console.log(recipe);
 
   const handleUnFavClick = () => {
     if (findRecipes !== undefined) {
@@ -59,7 +56,6 @@ function RecipeDetails() {
     localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
     setIsFavorite(!isFavorite);
   };
-  // console.log(findRecipes);
 
   return (
     <div>
