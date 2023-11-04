@@ -1,6 +1,6 @@
-import FilterBar from './FilterBar';
-import Header from './Header';
-import Cards from './Card';
+import FilterBar from '../components/FilterBar/FilterBar';
+import Header from '../components/Header';
+import Cards from '../components/card/Card';
 import FilterProvider from '../context/FilterProvider';
 
 export default function FavoriteRecipes() {

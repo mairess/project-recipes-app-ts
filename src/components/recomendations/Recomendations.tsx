@@ -1,6 +1,6 @@
-import useFetchRecommendations from '../hooks/useFetchRecommendation';
+import useFetchRecommendations from '../../hooks/useFetchRecommendation';
 import {
-  Title, Card, CardWrapper, Container, Name, Image } from './styles/RecomendationsStyle';
+  Title, Card, CardWrapper, Container, Name, Image } from './RecomendationsStyle';
 
 type RecomendationsType = {
   route: string,

@@ -1,8 +1,8 @@
-import { ButtonsWrapper, Button } from './styles/FavoriteRecipesStyle';
-import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import handleCopuToClipBoard from '../utils/handleCopyToClipBoard';
-import { FavoriteRecipe } from '../types';
+import { ButtonsWrapper, Button } from './CardButtonsStyle';
+import shareIcon from '../../images/shareIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import handleCopuToClipBoard from '../../utils/handleCopyToClipBoard';
+import { FavoriteRecipe } from '../../types';
 
 type CardButtonsProp = {
   recipe: FavoriteRecipe,

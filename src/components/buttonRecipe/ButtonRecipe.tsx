@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { DoneRecipe } from '../../types';
-import { ConteinerButton, Button } from '../styles/RecipeDetailsStyle';
+import { ConteinerButton, Button } from './ButtonRecipeStyle';
 
 type ButtonStartRecipeProps = {
   id: string,

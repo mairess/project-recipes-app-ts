@@ -36,3 +36,13 @@ height: 12rem;
 flex-shrink: 0;
 
 `;
+
+export const ButtonFavShare = styled.button`
+  background: #FCC436;
+  border: 2px solid black;
+  border-radius: 10px;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+`;

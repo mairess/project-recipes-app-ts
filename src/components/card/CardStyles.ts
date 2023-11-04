@@ -14,6 +14,12 @@ background: #FFF;
 margin: 15px;
 `;
 
+export const ButtonsWrapper = styled.div`
+width: 100px;
+display: flex;
+justify-content: space-around;
+`;
+
 export const Img = styled.img`
 width: 163.346px;
 height: 134.2px;
@@ -55,15 +61,4 @@ font-size: 9px;
 font-style: normal;
 font-weight: 300;
 line-height: normal;
-`;
-
-export const ButtonsWrapper = styled.div`
-width: 100px;
-display: flex;
-justify-content: space-around;
-`;
-
-export const Button = styled.button`
-background: none;
-border: none;
 `;

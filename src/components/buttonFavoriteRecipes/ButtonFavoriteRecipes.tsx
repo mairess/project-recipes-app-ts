@@ -1,4 +1,4 @@
-import { Container, Button, Img } from './styles/ButtonFavoriteRecipesStyles';
+import { Container, Button, Img } from './ButtonFavoriteRecipesStyles';
 
 type ButtonProps = {
   imgSrc: string;

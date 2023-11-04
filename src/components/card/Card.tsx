@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { ButtonsWrapper, Container, Img, Wrapper, Name, Infos,
-  Nationality } from './styles/FavoriteRecipesStyle';
-import CardButtons from './CardButtons';
-import FilterContext from '../context/FilterContext';
-import useNavigateToDetails from '../hooks/useNavigateToDetails';
+  Nationality } from './CardStyles';
+import CardButtons from '../cardButtons/CardButtons';
+import FilterContext from '../../context/FilterContext';
+import useNavigateToDetails from '../../hooks/useNavigateToDetails';
 
 function Card() {
   const { handleRemoveFavorite, filteredFavorites } = useContext(FilterContext);

@@ -40,15 +40,13 @@ function Login() {
       <input
         data-testid="email-input"
         type="email"
-        name=""
-        id=""
+        placeholder="Email"
         onChange={ handleEmailChange }
       />
       <input
         data-testid="password-input"
         type="password"
-        name=""
-        id=""
+        placeholder="Password"
         onChange={ handlePasswordChange }
       />
       <button
