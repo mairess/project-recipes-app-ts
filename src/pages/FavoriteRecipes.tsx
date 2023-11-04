@@ -1,4 +1,4 @@
-import FilterBar from '../components/FilterBar/FilterBar';
+import FilterBar from '../components/filterBar/FilterBar';
 import Header from '../components/Header';
 import Cards from '../components/card/Card';
 import FilterProvider from '../context/FilterProvider';
