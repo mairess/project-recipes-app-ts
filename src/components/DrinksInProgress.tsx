@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { drinksInProgress } from '../utils/apiRecipes';
 import blackHeart from '../images/blackHeartIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
+import { FavoriteRecipe } from '../types';
 
 function DrinksInProgress() {
   const navigate = useNavigate();
@@ -25,6 +26,9 @@ function DrinksInProgress() {
       setCheckboxStates(savedCheckboxStates);
       setStates(savedCheckboxStates.filter(Boolean).length);
     }
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+    const isFav = favorites.some((recipe: FavoriteRecipe) => recipe.id === params.id);
+    setIsFavorite(isFav);
   }, [params]);
 
   const ingredientsCount: any = Object.keys(drinksFilter).filter(
@@ -57,16 +61,29 @@ function DrinksInProgress() {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
-  const toggleFavorite = () => {
-    const favorites = JSON.parse(localStorage.getItem('favoriteMeals') || '[]');
+  const handleFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+
+    const recipeDetails = {
+      id: params.id,
+      type: 'drink',
+      nationality: '',
+      category: drinksFilter.strCategory,
+      alcoholicOrNot: 'Alcoholic',
+      name: drinksFilter.strDrink,
+      image: drinksFilter.strDrinkThumb,
+    };
+
     if (isFavorite) {
-      const updatedFavorites = favorites.filter((id: any) => id !== params.id);
-      localStorage.setItem('favoriteMeals', JSON.stringify(updatedFavorites));
+      const updatedFavorites = favorites
+        .filter((recipe: FavoriteRecipe) => recipe.id !== recipeDetails.id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
     } else {
-      const updatedFavorites = [...favorites, params.id];
-      localStorage.setItem('favoriteMeals', JSON.stringify(updatedFavorites));
+      const updatedFavorites = [...favorites, recipeDetails];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
     }
-    setIsFavorite(!isFavorite);
+
+    setIsFavorite((prevState) => !prevState);
   };
 
   const copyLinkToClipboard = () => {
@@ -104,11 +121,11 @@ function DrinksInProgress() {
         </div>
       )}
       <button
-        onClick={ toggleFavorite }
+        onClick={ handleFavorite }
       >
         <img
           data-testid="favorite-btn"
-          src={ isFavorite ? whiteHeart : blackHeart }
+          src={ isFavorite ? blackHeart : whiteHeart }
           alt="Fav/Unfav"
         />
       </button>
