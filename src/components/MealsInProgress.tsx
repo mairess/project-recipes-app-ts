@@ -98,6 +98,23 @@ function MealsInProgress() {
     setIsCopied(true);
   };
 
+  const handeSetLocalStorage = () => {
+    const doneRecipes = [{
+      id: params.id,
+      type: 'meal',
+      nationality: mealsFilter.strArea,
+      category: mealsFilter.strCategory,
+      alcoholicOrNot: '',
+      name: mealsFilter.strMeal,
+      image: mealsFilter.strMealThumb,
+      doneDate: new Date().toISOString(),
+      tags: mealsFilter ? mealsFilter.strTags.split(',') : [],
+    }];
+
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    navigate('/done-recipes');
+  };
+
   return (
     <div>
       <h1
@@ -162,7 +179,7 @@ function MealsInProgress() {
       <p data-testid="instructions">{mealsFilter.strInstructions}</p>
       <button
         data-testid="finish-recipe-btn"
-        onClick={ () => navigate('/done-recipes') }
+        onClick={ () => handeSetLocalStorage() }
         disabled={ !aux }
       >
         Finalizar receita

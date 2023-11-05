@@ -92,6 +92,23 @@ function DrinksInProgress() {
     setIsCopied(true);
   };
 
+  const handeSetLocalStorage = () => {
+    const doneRecipes = [{
+      id: params.id,
+      type: 'drink',
+      nationality: '',
+      category: drinksFilter.strCategory,
+      alcoholicOrNot: 'Alcoholic',
+      name: drinksFilter.strDrink,
+      image: drinksFilter.strDrinkThumb,
+      doneDate: new Date().toISOString(),
+      tags: drinksFilter.strTags ? drinksFilter.strTags.split(',') : [],
+    }];
+
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    navigate('/done-recipes');
+  };
+
   return (
     <div>
       <h1
@@ -159,7 +176,7 @@ function DrinksInProgress() {
       </p>
       <button
         data-testid="finish-recipe-btn"
-        onClick={ () => navigate('/done-recipes') }
+        onClick={ () => handeSetLocalStorage() }
         disabled={ !aux }
       >
         Finish Recipes
