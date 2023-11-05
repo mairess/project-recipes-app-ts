@@ -1,7 +1,7 @@
 import swal from 'sweetalert';
 import { FavoriteRecipe } from '../types';
 
-const handleCopuToClipBoard = (recipe: FavoriteRecipe) => {
+const handleCopyToClipBoard = (recipe: FavoriteRecipe) => {
   const { origin } = window.location;
   let URL = '';
 
@@ -17,4 +17,4 @@ const handleCopuToClipBoard = (recipe: FavoriteRecipe) => {
   swal('Link copied!', '', 'success');
 };
 
-export default handleCopuToClipBoard;
+export default handleCopyToClipBoard;
