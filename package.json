@@ -14,7 +14,9 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.10.0",
-    "styled-components": "^6.1.0"
+    "styled-components": "^6.1.0",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.9.0"
   },
   "scripts": {
     "cy": "env CY_CLI=true cypress run",

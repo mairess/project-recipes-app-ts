@@ -13,9 +13,9 @@ export default function Header() {
   const getHeaderTitle = () => {
     if (pathname === '/meals') return 'Meals';
     if (pathname === '/drinks') return 'Drinks';
-    if (pathname === '/profile') return 'Profile';
+    // if (pathname === '/profile') return 'Profile';
     if (pathname === '/done-recipes') return 'Done Recipes';
-    if (pathname === '/favorite-recipes') return 'Favorite Recipes';
+    // if (pathname === '/favorite-recipes') return 'Favorite Recipes';
   };
 
   const handleClickProfile = () => {
@@ -34,9 +34,15 @@ export default function Header() {
           data-testid="profile-top-btn"
         />
       </button>
-      <h1 data-testid="page-title">
-        { getHeaderTitle() }
-      </h1>
+      {(pathname === '/profile' || pathname === '/favorite-recipes') ? (
+        <h1>
+          { getHeaderTitle() }
+        </h1>
+      ) : (
+        <h1 data-testid="page-title">
+          { getHeaderTitle() }
+        </h1>
+      )}
       {shouldShowSearchIcon() && (
         <span>
           <SearchBar />

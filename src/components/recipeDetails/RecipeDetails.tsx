@@ -1,15 +1,14 @@
 import { useLocation, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { MealType } from '../types';
-import Recomendations from './Recomendations';
-import useFetchRecommendations from '../hooks/useFetchRecommendation';
-import useFetchDetails from '../hooks/useFetchDetails';
-import { Iframe, Img } from './styles/RecipeDetailsStyle';
-import ButtonRecipe from './ButtonRecipe';
-import shareIcon from '../images/shareIcon.svg';
-import { Button } from './styles/ButtonFavShare';
-import whitheHeart from '../images/whiteHeartIcon.svg';
-import blackHeart from '../images/blackHeartIcon.svg';
+import { MealType } from '../../types';
+import Recomendations from '../recomendations/Recomendations';
+import useFetchRecommendations from '../../hooks/useFetchRecommendation';
+import useFetchDetails from '../../hooks/useFetchDetails';
+import { Iframe, Img, ButtonFavShare } from './RecipeDetailsStyle';
+import ButtonRecipe from '../buttonRecipe/ButtonRecipe';
+import shareIcon from '../../images/shareIcon.svg';
+import whitheHeart from '../../images/whiteHeartIcon.svg';
+import blackHeart from '../../images/blackHeartIcon.svg';
 
 function RecipeDetails() {
   const location = useLocation();
@@ -31,8 +30,6 @@ function RecipeDetails() {
     setIsCopied(true);
   };
 
-  // console.log(findRecipes);
-
   const handleFavoriteClick = () => {
     if (doneRecipesJSON) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
@@ -50,7 +47,6 @@ function RecipeDetails() {
     setIsFavorite(!isFavorite);
     localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
   };
-  // console.log(recipe);
 
   const handleUnFavClick = () => {
     if (findRecipes !== undefined) {
@@ -59,7 +55,6 @@ function RecipeDetails() {
     localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipes));
     setIsFavorite(!isFavorite);
   };
-  // console.log(findRecipes);
 
   return (
     <div>
@@ -109,7 +104,7 @@ function RecipeDetails() {
       ) : (
         <div>Loading...</div>
       )}
-      <Button
+      <ButtonFavShare
         data-testid="share-btn"
         onClick={ handleShareClick }
       >
@@ -117,26 +112,26 @@ function RecipeDetails() {
           src={ shareIcon }
           alt="Ícone de Compartilhar"
         />
-      </Button>
+      </ButtonFavShare>
       {isCopied && (
         <div data-testid="share-message">
           Link copied!
         </div>
       )}
       {findRecipes !== -1 ? (
-        <Button
+        <ButtonFavShare
           onClick={ handleUnFavClick }
           className="custom-button"
         >
           <img data-testid="favorite-btn" src={ blackHeart } alt="Desfavoritar" />
-        </Button>
+        </ButtonFavShare>
       ) : (
-        <Button
+        <ButtonFavShare
           onClick={ handleFavoriteClick }
           className="custom-button"
         >
           <img data-testid="favorite-btn" src={ whitheHeart } alt="Favoritar" />
-        </Button>
+        </ButtonFavShare>
       )}
       <Recomendations
         route={ route }

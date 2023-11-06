@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { apiFilterDrinks, categoryMeals, drinksRequest,
-  mealsRequest, requestAPImeals, requestApiCategory } from '../apiRecipes';
+  mealsRequest, requestAPImeals, requestApiCategory } from '../utils/apiRecipes';
 import { RecipeContext } from '../context/RecipeContext';
 
 function Recipes() {

@@ -1,6 +1,7 @@
-import useFetchRecommendations from '../hooks/useFetchRecommendation';
+import { useNavigate } from 'react-router-dom';
+import useFetchRecommendations from '../../hooks/useFetchRecommendation';
 import {
-  Title, Card, CardWrapper, Container, Name, Image } from './styles/RecomendationsStyle';
+  Title, Card, CardWrapper, Container, Name, Image } from './RecomendationsStyle';
 
 type RecomendationsType = {
   route: string,
@@ -8,6 +9,7 @@ type RecomendationsType = {
 
 function Recomendations({ route }: RecomendationsType) {
   const { recommendations, loading } = useFetchRecommendations(route);
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -20,6 +22,7 @@ function Recomendations({ route }: RecomendationsType) {
                 <Card
                   data-testid={ `${index}-recommendation-card` }
                   key={ meal.idMeal }
+                  onClick={ () => navigate(`/meals/${meal.idMeal}`) }
                 >
 
                   <Image src={ meal.strMealThumb } alt={ meal.strMeal } />
@@ -41,6 +44,7 @@ function Recomendations({ route }: RecomendationsType) {
                 <Card
                   data-testid={ `${index}-recommendation-card` }
                   key={ drink.idDrink }
+                  onClick={ () => navigate(`/drinks/${drink.idDrink}`) }
                 >
 
                   <Image src={ drink.strDrinkThumb } alt={ drink.strDrink } />
