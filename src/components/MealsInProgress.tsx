@@ -25,7 +25,6 @@ function MealsInProgress() {
       setCheckboxStates(savedCheckboxStates);
       setStates(savedCheckboxStates.filter(Boolean).length);
     }
-
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
     const isFav = favorites.some((recipe: FavoriteRecipe) => recipe.id === params.id);
     setIsFavorite(isFav);
