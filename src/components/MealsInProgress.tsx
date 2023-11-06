@@ -98,20 +98,27 @@ function MealsInProgress() {
     setIsCopied(true);
   };
 
-  const handeSetLocalStorage = () => {
-    const doneRecipes = [{
-      id: params.id,
-      type: 'meal',
-      nationality: mealsFilter.strArea,
-      category: mealsFilter.strCategory,
-      alcoholicOrNot: '',
-      name: mealsFilter.strMeal,
-      image: mealsFilter.strMealThumb,
-      doneDate: new Date().toISOString(),
-      tags: mealsFilter ? mealsFilter.strTags.split(',') : [],
-    }];
+  const handleSetLocalStorage = () => {
+    const doneRecipesStorage = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
 
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    const isDone = doneRecipesStorage
+      .some((recipe: FavoriteRecipe) => recipe.id === params.id);
+
+    if (!isDone) {
+      const newDoneRecipes = {
+        id: params.id,
+        type: 'meal',
+        nationality: mealsFilter.strArea,
+        category: mealsFilter.strCategory,
+        alcoholicOrNot: '',
+        name: mealsFilter.strMeal,
+        image: mealsFilter.strMealThumb,
+        doneDate: new Date().toISOString(),
+        tags: mealsFilter ? mealsFilter.strTags.split(',') : [],
+      };
+      const updatedDoneRecipes = [...doneRecipesStorage, newDoneRecipes];
+      localStorage.setItem('doneRecipes', JSON.stringify(updatedDoneRecipes));
+    }
     navigate('/done-recipes');
   };
 
@@ -179,7 +186,7 @@ function MealsInProgress() {
       <p data-testid="instructions">{mealsFilter.strInstructions}</p>
       <button
         data-testid="finish-recipe-btn"
-        onClick={ () => handeSetLocalStorage() }
+        onClick={ () => handleSetLocalStorage() }
         disabled={ !aux }
       >
         Finalizar receita
