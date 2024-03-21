@@ -1,0 +1,10 @@
+version: '3'
+services:
+  frontend:
+    container_name: trybe_recipes_app
+    build: ./
+    working_dir: /frontend
+    volumes:
+      - ./src:/frontend/src
+    ports:
+      - 3000:3000
