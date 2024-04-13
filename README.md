@@ -1,5 +1,13 @@
 # <p align="center">Projeto App de Receitas</p>
 
+<div align="center">
+  
+| Statements                  | Branches                | Functions                 | Lines                |
+| --------------------------- | ----------------------- | ------------------------- | -------------------- |
+| ![Statements](https://img.shields.io/badge/Coverage-89.99%25-brightgreen.svg) | ![Branches](https://img.shields.io/badge/Coverage-91.58%25-brightgreen.svg) | ![Functions](https://img.shields.io/badge/Coverage-80.58%25-yellow.svg) | ![Lines](https://img.shields.io/badge/Coverage-89.99%25-brightgreen.svg)    |
+
+</div>
+
 ## Contexto
 
 Esse é um projeto em grupo, o objetivo é desenvolver um sistema versátil que permita aos usuários explorar, buscar, filtrar, favoritar, compartilhar e acompanhar o processo de preparação de receitas e drinks. Utilizaremos duas APIs distintas, uma para comidas e outra para bebidas, garantindo uma ampla variedade de opções para os usuários. O layout foi projetado com foco em dispositivos **móveis apenas** (360px de largura por 640px de altura).
@@ -72,6 +80,24 @@ O vite server estará disponível na porta `3000`:
 
 ```HTML
 http://localhost:3000
+```
+
+</details>
+
+<details>
+
+<summary><strong>Rode os testes</strong></summary><br>
+
+Rode os testes com:
+
+```SHELL
+npm run test
+```
+
+Rode a cobertura:
+
+```SHELL
+npm run coverage
 ```
 
 </details>
