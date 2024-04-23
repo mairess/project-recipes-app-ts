@@ -2,10 +2,9 @@
 
 <div align="center">
   
-| Statements                  | Branches                | Functions                 | Lines                |
-| --------------------------- | ----------------------- | ------------------------- | -------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-89.99%25-brightgreen.svg) | ![Branches](https://img.shields.io/badge/Coverage-91.58%25-brightgreen.svg) | ![Functions](https://img.shields.io/badge/Coverage-80.58%25-yellow.svg) | ![Lines](https://img.shields.io/badge/Coverage-89.99%25-brightgreen.svg)    |
-
+<a href="https://codecov.io/gh/mairess/project-recipes-app-ts" > 
+ <img src="https://codecov.io/gh/mairess/project-recipes-app-ts/graph/badge.svg?token=1BUN55N4JH"/> 
+ </a>
 </div>
 
 ## Contexto
