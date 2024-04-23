@@ -35,26 +35,6 @@ Inicie o vite server:
 npm run dev
 ```
 
-### Os testes
-
-Rode os testes com:
-
-```SHELL
-npm test
-```
-
-Rode um teste específico:
-
-```SHELL
-npm test RecipeDetails
-```
-
-Rode a cobertura dos testes:
-
-```SHELL
-npm run coverage
-```
-
 </details>
 
 <details>
